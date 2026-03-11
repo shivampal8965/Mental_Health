@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindCare - Mood Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="container flex-between">
+            <div class="navbar-brand">
+                <span>🧠</span>
+                <span>MindCare</span>
+            </div>
+            <ul style="display: flex; list-style: none; gap: 2rem; margin: 0;">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                <li><a href="mood_tracker.html" class="nav-link active">Mood Tracker</a></li>
+                <li><a href="goals.html" class="nav-link">My Goals</a></li>
+                <li><a href="ratings.html" class="nav-link">Ratings</a></li>
+                <li><a href="stats.html" class="nav-link">Statistics</a></li>
+                <li><a href="chatbot.html" class="nav-link">AI Chatbot</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="container" style="padding: 2rem 0;">
+        <div style="margin-bottom: 3rem;">
+            <h1 style="font-size: 2.5rem; color: var(--text-primary); margin-bottom: 0.5rem;">Mood Tracker 📊</h1>
+            <p style="color: var(--text-secondary); font-size: 1rem;">Log your current mood and understand your emotional patterns</p>
+        </div>
+
+        <!-- MOOD TRACKING FORM -->
+        <div class="card" style="margin-bottom: 2rem; max-width: 700px;">
+            <div class="card-header">
+                How are you feeling right now?
+            </div>
+            <div class="card-body">
+                <!-- MOOD SELECTOR -->
+                <div class="mood-selector">
+                    <div class="mood-option" onclick="selectMood(this)" data-mood="5">
+                        <div class="mood-emoji">😄</div>
+                        <div class="mood-name">Excited</div>
+                    </div>
+                    <div class="mood-option" onclick="selectMood(this)" data-mood="4">
+                        <div class="mood-emoji">😊</div>
+                        <div class="mood-name">Happy</div>
+                    </div>
+                    <div class="mood-option" onclick="selectMood(this)" data-mood="3">
+                        <div class="mood-emoji">😐</div>
+                        <div class="mood-name">Neutral</div>
+                    </div>
+                    <div class="mood-option" onclick="selectMood(this)" data-mood="2">
+                        <div class="mood-emoji">😔</div>
+                        <div class="mood-name">Sad</div>
+                    </div>
+                    <div class="mood-option" onclick="selectMood(this)" data-mood="1">
+                        <div class="mood-emoji">😢</div>
+                        <div class="mood-name">Very Sad</div>
+                    </div>
+                    <div class="mood-option" onclick="selectMood(this)" data-mood="0">
+                        <div class="mood-emoji">😭</div>
+                        <div class="mood-name">Overwhelmed</div>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 2rem;">
+                    <label class="form-label">Energy Level (1-10)</label>
+                    <input type="range" class="form-control" id="energyLevel" min="1" max="10" value="5" 
+                        style="width: 100%; height: 8px; border: none; padding: 0; cursor: pointer;">
+                    <div style="text-align: center; color: var(--primary-color); font-weight: 600; margin-top: 0.5rem;">
+                        <span id="energyValue">5</span>/10
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Stress Level (1-10)</label>
+                    <input type="range" class="form-control" id="stressLevel" min="1" max="10" value="5"
+                        style="width: 100%; height: 8px; border: none; padding: 0; cursor: pointer;">
+                    <div style="text-align: center; color: var(--warning-color); font-weight: 600; margin-top: 0.5rem;">
+                        <span id="stressValue">5</span>/10
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Sleep Quality</label>
+                    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem;">
+                        <div style="text-align: center;">
+                            <input type="radio" name="sleep" value="1" id="sleep1" style="display: none;">
+                            <label for="sleep1" style="cursor: pointer; display: block; padding: 1rem; border: 2px solid var(--border-color); border-radius: 0.5rem; transition: all 0.3s;">
+                                😴 Poor
+                            </label>
+                        </div>
+                        <div style="text-align: center;">
+                            <input type="radio" name="sleep" value="2" id="sleep2" style="display: none;">
+                            <label for="sleep2" style="cursor: pointer; display: block; padding: 1rem; border: 2px solid var(--border-color); border-radius: 0.5rem; transition: all 0.3s;">
+                                😑 Fair
+                            </label>
+                        </div>
+                        <div style="text-align: center;">
+                            <input type="radio" name="sleep" value="3" id="sleep3" style="display: none;">
+                            <label for="sleep3" style="cursor: pointer; display: block; padding: 1rem; border: 2px solid var(--border-color); border-radius: 0.5rem; transition: all 0.3s;" checked>
+                                😊 Good
+                            </label>
+                        </div>
+                        <div style="text-align: center;">
+                            <input type="radio" name="sleep" value="4" id="sleep4" style="display: none;">
+                            <label for="sleep4" style="cursor: pointer; display: block; padding: 1rem; border: 2px solid var(--border-color); border-radius: 0.5rem; transition: all 0.3s;">
+                                😴 Better
+                            </label>
+                        </div>
+                        <div style="text-align: center;">
+                            <input type="radio" name="sleep" value="5" id="sleep5" style="display: none;">
+                            <label for="sleep5" style="cursor: pointer; display: block; padding: 1rem; border: 2px solid var(--border-color); border-radius: 0.5rem; transition: all 0.3s;">
+                                😴 Great
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">What's on your mind?</label>
+                    <textarea class="form-control" placeholder="Share your thoughts, feelings, or any notes about your day..." id="moodNotes"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Associated Activities</label>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                        <label class="form-check" style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 0.5rem;">
+                            <input type="checkbox" class="form-check-input">
+                            <span>Work/Study</span>
+                        </label>
+                        <label class="form-check" style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 0.5rem;">
+                            <input type="checkbox" class="form-check-input">
+                            <span>Exercise</span>
+                        </label>
+                        <label class="form-check" style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 0.5rem;">
+                            <input type="checkbox" class="form-check-input">
+                            <span>Socializing</span>
+                        </label>
+                        <label class="form-check" style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 0.5rem;">
+                            <input type="checkbox" class="form-check-input">
+                            <span>Meditation</span>
+                        </label>
+                        <label class="form-check" style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 0.5rem;">
+                            <input type="checkbox" class="form-check-input">
+                            <span>Reading</span>
+                        </label>
+                        <label class="form-check" style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 0.5rem;">
+                            <input type="checkbox" class="form-check-input">
+                            <span>Hobbies</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary btn-lg" style="width: 100%; margin-top: 2rem;" onclick="saveMood()">
+                    Save Mood Entry 💾
+                </button>
+            </div>
+        </div>
+
+        <!-- MOOD HISTORY -->
+        <div class="card">
+            <div class="card-header">
+                📝 Recent Mood Entries
+            </div>
+            <div class="card-body">
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <!-- Entry 1 -->
+                    <div style="border-left: 4px solid var(--primary-color); padding-left: 1rem;">
+                        <div class="flex-between">
+                            <div>
+                                <p style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem;">😊 Happy - Energy: 7/10, Stress: 4/10</p>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem;">Today at 2:30 PM</p>
+                                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem;">Had a great workout session today!</p>
+                            </div>
+                            <button style="background: transparent; border: none; color: var(--danger-color); cursor: pointer; font-size: 1.2rem;">✕</button>
+                        </div>
+                    </div>
+
+                    <!-- Entry 2 -->
+                    <div style="border-left: 4px solid var(--warning-color); padding-left: 1rem;">
+                        <div class="flex-between">
+                            <div>
+                                <p style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem;">😐 Neutral - Energy: 5/10, Stress: 6/10</p>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem;">Yesterday at 5:00 PM</p>
+                                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem;">Busy work day, feeling tired</p>
+                            </div>
+                            <button style="background: transparent; border: none; color: var(--danger-color); cursor: pointer; font-size: 1.2rem;">✕</button>
+                        </div>
+                    </div>
+
+                    <!-- Entry 3 -->
+                    <div style="border-left: 4px solid var(--success-color); padding-left: 1rem;">
+                        <div class="flex-between">
+                            <div>
+                                <p style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem;">😄 Excited - Energy: 9/10, Stress: 2/10</p>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem;">2 days ago at 7:00 PM</p>
+                                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem;">Spent time with friends, feeling energized</p>
+                            </div>
+                            <button style="background: transparent; border: none; color: var(--danger-color); cursor: pointer; font-size: 1.2rem;">✕</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h5>About MindCare</h5>
+                    <p style="color: rgba(255,255,255,0.7);">Dedicated to mental health support.</p>
+                </div>
+                <div class="footer-section">
+                    <h5>Features</h5>
+                    <ul>
+                        <li><a href="#">Mood Tracking</a></li>
+                        <li><a href="#">AI Chatbot</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h5>Support</h5>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 MindCare. All rights reserved. 💙</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let selectedMood = null;
+
+        function selectMood(element) {
+            document.querySelectorAll('.mood-option').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedMood = element.getAttribute('data-mood');
+        }
+
+        document.getElementById('energyLevel').addEventListener('input', (e) => {
+            document.getElementById('energyValue').textContent = e.target.value;
+        });
+
+        document.getElementById('stressLevel').addEventListener('input', (e) => {
+            document.getElementById('stressValue').textContent = e.target.value;
+        });
+
+        function saveMood() {
+            if (!selectedMood) {
+                alert('Please select a mood');
+                return;
+            }
+
+            const moodData = {
+                mood: selectedMood,
+                energy: document.getElementById('energyLevel').value,
+                stress: document.getElementById('stressLevel').value,
+                sleep: document.querySelector('input[name="sleep"]:checked')?.value || 3,
+                notes: document.getElementById('moodNotes').value,
+                timestamp: new Date().toLocaleString()
+            };
+
+            console.log('Mood saved:', moodData);
+            alert('✅ Mood entry saved successfully!');
+
+            // Reset form
+            document.querySelectorAll('.mood-option').forEach(el => el.classList.remove('selected'));
+            document.getElementById('moodNotes').value = '';
+            selectedMood = null;
+        }
+    </script>
+</body>
+</html>

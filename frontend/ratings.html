@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindCare - Ratings & Feedback</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="container flex-between">
+            <div class="navbar-brand">
+                <span>🧠</span>
+                <span>MindCare</span>
+            </div>
+            <ul style="display: flex; list-style: none; gap: 2rem; margin: 0;">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                <li><a href="mood_tracker.html" class="nav-link">Mood Tracker</a></li>
+                <li><a href="goals.html" class="nav-link">My Goals</a></li>
+                <li><a href="ratings.html" class="nav-link active">Ratings</a></li>
+                <li><a href="stats.html" class="nav-link">Statistics</a></li>
+                <li><a href="chatbot.html" class="nav-link">AI Chatbot</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="container" style="padding: 2rem 0;">
+        <div style="margin-bottom: 3rem;">
+            <h1 style="font-size: 2.5rem; color: var(--text-primary); margin-bottom: 0.5rem;">Share Your Feedback ⭐</h1>
+            <p style="color: var(--text-secondary); font-size: 1rem;">Help us improve MindCare with your valuable feedback and rating</p>
+        </div>
+
+        <!-- RATING FORM -->
+        <div class="card" style="margin-bottom: 2rem; max-width: 700px;">
+            <div class="card-header">
+                ✨ Rate Your Experience
+            </div>
+            <div class="card-body">
+                <form id="ratingForm" onsubmit="submitRating(event)">
+                    <!-- OVERALL RATING -->
+                    <div class="form-group">
+                        <label class="form-label">Overall Rating</label>
+                        <div style="display: flex; gap: 1rem; font-size: 2.5rem; margin: 1.5rem 0;">
+                            <span class="star" onclick="setRating(1)" style="cursor: pointer; transition: all 0.3s;">⭐</span>
+                            <span class="star" onclick="setRating(2)" style="cursor: pointer; transition: all 0.3s;">⭐</span>
+                            <span class="star" onclick="setRating(3)" style="cursor: pointer; transition: all 0.3s;">⭐</span>
+                            <span class="star" onclick="setRating(4)" style="cursor: pointer; transition: all 0.3s;">⭐</span>
+                            <span class="star" onclick="setRating(5)" style="cursor: pointer; transition: all 0.3s;">⭐</span>
+                        </div>
+                        <input type="hidden" id="overallRating" value="0">
+                        <p id="ratingText" style="color: var(--primary-color); font-weight: 600; margin-top: 1rem;">Please select a rating</p>
+                    </div>
+
+                    <!-- FEATURE RATINGS -->
+                    <div class="form-group">
+                        <label class="form-label">How would you rate these features?</label>
+                        
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <span>Mood Tracking</span>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <input type="radio" name="moodTracking" value="1"> 1
+                                    <input type="radio" name="moodTracking" value="2"> 2
+                                    <input type="radio" name="moodTracking" value="3"> 3
+                                    <input type="radio" name="moodTracking" value="4"> 4
+                                    <input type="radio" name="moodTracking" value="5" checked> 5
+                                </div>
+                            </label>
+                        </div>
+
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <span>AI Chatbot</span>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <input type="radio" name="chatbot" value="1"> 1
+                                    <input type="radio" name="chatbot" value="2"> 2
+                                    <input type="radio" name="chatbot" value="3"> 3
+                                    <input type="radio" name="chatbot" value="4"> 4
+                                    <input type="radio" name="chatbot" value="5" checked> 5
+                                </div>
+                            </label>
+                        </div>
+
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <span>User Interface</span>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <input type="radio" name="ui" value="1"> 1
+                                    <input type="radio" name="ui" value="2"> 2
+                                    <input type="radio" name="ui" value="3"> 3
+                                    <input type="radio" name="ui" value="4"> 4
+                                    <input type="radio" name="ui" value="5" checked> 5
+                                </div>
+                            </label>
+                        </div>
+
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <span>Analytics & Insights</span>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <input type="radio" name="analytics" value="1"> 1
+                                    <input type="radio" name="analytics" value="2"> 2
+                                    <input type="radio" name="analytics" value="3"> 3
+                                    <input type="radio" name="analytics" value="4"> 4
+                                    <input type="radio" name="analytics" value="5" checked> 5
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- RECOMMENDATION -->
+                    <div class="form-group">
+                        <label class="form-label">Would you recommend MindCare to a friend?</label>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                            <label class="form-check" style="display: flex; align-items: center; gap: 0.5rem; padding: 1rem; border: 2px solid var(--border-color); border-radius: 0.5rem; cursor: pointer;">
+                                <input type="radio" name="recommend" value="yes" checked>
+                                <span>Yes, Definitely! 😊</span>
+                            </label>
+                            <label class="form-check" style="display: flex; align-items: center; gap: 0.5rem; padding: 1rem; border: 2px solid var(--border-color); border-radius: 0.5rem; cursor: pointer;">
+                                <input type="radio" name="recommend" value="maybe">
+                                <span>Maybe 🤔</span>
+                            </label>
+                            <label class="form-check" style="display: flex; align-items: center; gap: 0.5rem; padding: 1rem; border: 2px solid var(--border-color); border-radius: 0.5rem; cursor: pointer;">
+                                <input type="radio" name="recommend" value="no">
+                                <span>Not Really 😟</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- COMMENTS -->
+                    <div class="form-group">
+                        <label class="form-label">Any Comments or Suggestions?</label>
+                        <textarea class="form-control" id="comments" placeholder="Tell us what you think..." style="min-height: 150px;"></textarea>
+                    </div>
+
+                    <!-- EMAIL -->
+                    <div class="form-group">
+                        <label class="form-label">Email (Optional - for follow-up)</label>
+                        <input type="email" class="form-control" id="email" placeholder="your@email.com">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 1rem;">
+                        Submit Feedback 📤
+                    </button>
+                </form>
+
+                <div id="successMessage" class="alert alert-success" style="display: none; margin-top: 1rem;">
+                    ✅ Thank you for your feedback! It helps us improve.
+                </div>
+            </div>
+        </div>
+
+        <!-- RECENT RATINGS -->
+        <div class="card">
+            <div class="card-header">
+                ⭐ Recent Ratings from Users
+            </div>
+            <div class="card-body">
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <!-- Rating 1 -->
+                    <div style="padding: 1rem; border-left: 4px solid var(--primary-color); border-radius: 0.5rem; background: var(--light-bg);">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                            <div>
+                                <p style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem;">Sarah M.</p>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem;">2 days ago</p>
+                            </div>
+                            <div style="font-size: 1.2rem;">⭐⭐⭐⭐⭐</div>
+                        </div>
+                        <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">"MindCare has genuinely helped me track my mental health journey. The mood tracker is so easy to use!"</p>
+                    </div>
+
+                    <!-- Rating 2 -->
+                    <div style="padding: 1rem; border-left: 4px solid var(--success-color); border-radius: 0.5rem; background: var(--light-bg);">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                            <div>
+                                <p style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem;">John D.</p>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem;">5 days ago</p>
+                            </div>
+                            <div style="font-size: 1.2rem;">⭐⭐⭐⭐</div>
+                        </div>
+                        <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">"The AI chatbot is surprisingly helpful. Love the goal-setting feature for my exercise routine!"</p>
+                    </div>
+
+                    <!-- Rating 3 -->
+                    <div style="padding: 1rem; border-left: 4px solid var(--info-color); border-radius: 0.5rem; background: var(--light-bg);">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                            <div>
+                                <p style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem;">Emma L.</p>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem;">1 week ago</p>
+                            </div>
+                            <div style="font-size: 1.2rem;">⭐⭐⭐⭐⭐</div>
+                        </div>
+                        <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">"The analytics dashboard is beautiful and informative. Really helps me see my patterns."</p>
+                    </div>
+
+                    <!-- Rating 4 -->
+                    <div style="padding: 1rem; border-left: 4px solid var(--warning-color); border-radius: 0.5rem; background: var(--light-bg);">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                            <div>
+                                <p style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem;">Alex P.</p>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem;">2 weeks ago</p>
+                            </div>
+                            <div style="font-size: 1.2rem;">⭐⭐⭐⭐</div>
+                        </div>
+                        <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">"Great app overall! Would love to see a mobile version soon. Already recommended it to friends."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h5>About MindCare</h5>
+                    <p style="color: rgba(255,255,255,0.7);">Dedicated to mental health support.</p>
+                </div>
+                <div class="footer-section">
+                    <h5>Features</h5>
+                    <ul>
+                        <li><a href="#">Mood Tracking</a></li>
+                        <li><a href="#">Goals</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h5>Support</h5>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 MindCare. All rights reserved. 💙</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+        let selectedRating = 0;
+        const ratingTexts = ['', 'Poor 😞', 'Fair 😐', 'Good 😊', 'Very Good 😄', 'Excellent 😍'];
+
+        function setRating(rating) {
+            selectedRating = rating;
+            document.getElementById('overallRating').value = rating;
+            document.getElementById('ratingText').textContent = ratingTexts[rating];
+
+            // Update star colors
+            const stars = document.querySelectorAll('.star');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.style.color = 'var(--primary-color)';
+                    star.style.textShadow = '0 0 10px rgba(99, 102, 241, 0.5)';
+                } else {
+                    star.style.color = '#ccc';
+                    star.style.textShadow = 'none';
+                }
+            });
+        }
+
+        function submitRating(event) {
+            event.preventDefault();
+
+            if (selectedRating === 0) {
+                alert('Please select an overall rating');
+                return;
+            }
+
+            const ratingData = {
+                overall: selectedRating,
+                moodTracking: document.querySelector('input[name="moodTracking"]:checked').value,
+                chatbot: document.querySelector('input[name="chatbot"]:checked').value,
+                ui: document.querySelector('input[name="ui"]:checked').value,
+                analytics: document.querySelector('input[name="analytics"]:checked').value,
+                recommend: document.querySelector('input[name="recommend"]:checked').value,
+                comments: document.getElementById('comments').value,
+                email: document.getElementById('email').value,
+                timestamp: new Date().toISOString()
+            };
+
+            // Save to localStorage
+            const ratings = JSON.parse(localStorage.getItem('ratings') || '[]');
+            ratings.push(ratingData);
+            localStorage.setItem('ratings', JSON.stringify(ratings));
+
+            // Show success message
+            document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('ratingForm').reset();
+            selectedRating = 0;
+            document.getElementById('ratingText').textContent = 'Please select a rating';
+
+            console.log('Rating submitted:', ratingData);
+        }
+    </script>
+</body>
+</html>

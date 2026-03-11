@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindCare - AI Chatbot</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="container flex-between">
+            <div class="navbar-brand">
+                <span>🧠</span>
+                <span>MindCare</span>
+            </div>
+            <ul style="display: flex; list-style: none; gap: 2rem; margin: 0;">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                <li><a href="mood_tracker.html" class="nav-link">Mood Tracker</a></li>
+                <li><a href="goals.html" class="nav-link">My Goals</a></li>
+                <li><a href="ratings.html" class="nav-link">Ratings</a></li>
+                <li><a href="stats.html" class="nav-link">Statistics</a></li>
+                <li><a href="chatbot.html" class="nav-link active">AI Chatbot</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="container" style="padding: 2rem 0;">
+        <div style="margin-bottom: 2rem;">
+            <h1 style="font-size: 2.5rem; color: var(--text-primary); margin-bottom: 0.5rem;">Mental Health AI Chatbot 🤖</h1>
+            <p style="color: var(--text-secondary); font-size: 1rem;">Get personalized support from our intelligent assistant</p>
+        </div>
+
+        <!-- CHATBOT INTERFACE -->
+        <div style="display: grid; grid-template-columns: 1fr 300px; gap: 2rem; margin-bottom: 2rem; max-width: 100%;">
+            <!-- CHAT WINDOW -->
+            <div class="chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Initial greeting -->
+                    <div class="message bot">
+                        <div class="message-avatar">🤖</div>
+                        <div class="message-bubble">
+                            <p>👋 Hello! I'm your Mental Health Assistant. How are you feeling today? I'm here to listen and support you.</p>
+                        </div>
+                    </div>
+
+                    <div class="message bot">
+                        <div class="message-avatar">🤖</div>
+                        <div class="message-bubble">
+                            <p>Feel free to share what's on your mind, or choose from the quick options on the right! 💙</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-input-area">
+                    <input type="text" id="userInput" placeholder="Type your message here..." autocomplete="off">
+                    <button onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+
+            <!-- QUICK OPTIONS SIDEBAR -->
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <div class="card" style="padding: 1rem; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; border: none;">
+                    <p style="font-weight: 600; margin-bottom: 1rem;">Quick Options</p>
+                </div>
+
+                <button class="btn btn-primary" style="width: 100%; justify-content: flex-start;" onclick="quickOption('I feel anxious')">
+                    😰 I feel anxious
+                </button>
+
+                <button class="btn btn-primary" style="width: 100%; justify-content: flex-start;" onclick="quickOption('I am stressed')">
+                    😟 I am stressed
+                </button>
+
+                <button class="btn btn-primary" style="width: 100%; justify-content: flex-start;" onclick="quickOption('I feel sad')">
+                    😢 I feel sad
+                </button>
+
+                <button class="btn btn-primary" style="width: 100%; justify-content: flex-start;" onclick="quickOption('I need motivation')">
+                    💪 I need motivation
+                </button>
+
+                <button class="btn btn-primary" style="width: 100%; justify-content: flex-start;" onclick="quickOption('Sleep tips')">
+                    😴 Sleep tips
+                </button>
+
+                <button class="btn btn-primary" style="width: 100%; justify-content: flex-start;" onclick="quickOption('Exercise advice')">
+                    🏃 Exercise advice
+                </button>
+
+                <button class="btn btn-primary" style="width: 100%; justify-content: flex-start;" onclick="clearChat()">
+                    🔄 New Chat
+                </button>
+            </div>
+        </div>
+
+        <!-- WELLNESS TIPS SECTION -->
+        <div class="card">
+            <div class="card-header">
+                💡 Daily Wellness Tips
+            </div>
+            <div class="card-body">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                    <!-- Tip 1 -->
+                    <div style="padding: 1rem; border-left: 4px solid var(--primary-color);">
+                        <h4 style="color: var(--primary-color); margin-bottom: 0.5rem;">🧘 Mindfulness Practice</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                            Spend just 5 minutes daily in mindfulness meditation to reduce stress and improve focus.
+                        </p>
+                    </div>
+
+                    <!-- Tip 2 -->
+                    <div style="padding: 1rem; border-left: 4px solid var(--success-color);">
+                        <h4 style="color: var(--success-color); margin-bottom: 0.5rem;">🏃 Stay Active</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                            Regular exercise boosts mood and energy levels. Aim for at least 30 minutes daily.
+                        </p>
+                    </div>
+
+                    <!-- Tip 3 -->
+                    <div style="padding: 1rem; border-left: 4px solid var(--info-color);">
+                        <h4 style="color: var(--info-color); margin-bottom: 0.5rem;">💤 Good Sleep Hygiene</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                            Maintain a consistent sleep schedule and avoid screens 1 hour before bedtime.
+                        </p>
+                    </div>
+
+                    <!-- Tip 4 -->
+                    <div style="padding: 1rem; border-left: 4px solid var(--warning-color);">
+                        <h4 style="color: var(--warning-color); margin-bottom: 0.5rem;">🤝 Connect Socially</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                            Maintain strong relationships and social connections for better mental health.
+                        </p>
+                    </div>
+
+                    <!-- Tip 5 -->
+                    <div style="padding: 1rem; border-left: 4px solid var(--success-color);">
+                        <h4 style="color: var(--success-color); margin-bottom: 0.5rem;">🥗 Healthy Nutrition</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                            Balanced diet with fruits, vegetables, and whole grains supports mental wellbeing.
+                        </p>
+                    </div>
+
+                    <!-- Tip 6 -->
+                    <div style="padding: 1rem; border-left: 4px solid var(--primary-color);">
+                        <h4 style="color: var(--primary-color); margin-bottom: 0.5rem;">📔 Journal Your Thoughts</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                            Writing down thoughts helps process emotions and increase self-awareness.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h5>About MindCare</h5>
+                    <p style="color: rgba(255,255,255,0.7);">Dedicated to mental health support.</p>
+                </div>
+                <div class="footer-section">
+                    <h5>Features</h5>
+                    <ul>
+                        <li><a href="#">Mood Tracking</a></li>
+                        <li><a href="#">AI Chatbot</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h5>Support</h5>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 MindCare. All rights reserved. 💙</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const botResponses = {
+            'anxious': "I understand you're feeling anxious. That's completely valid. Try these techniques:\n\n✓ Deep breathing: 4 counts in, hold for 4, exhale for 4\n✓ Ground yourself: Name 5 things you see, 4 you can touch, 3 you hear, 2 you smell, 1 you taste\n✓ Progressive muscle relaxation\n\nWould you like to learn more about any of these?",
+            
+            'stressed': "Stress is a common experience. Here are some immediate relief techniques:\n\n✓ Take a 10-minute break\n✓ Practice deep breathing exercises\n✓ Go for a short walk\n✓ Listen to calming music\n✓ Practice gratitude\n\nRemember, it's okay to ask for help. What's causing your stress today?",
+            
+            'sad': "I'm sorry you're feeling sad. It's important to acknowledge these feelings. Here's what might help:\n\n✓ Talk to someone you trust\n✓ Engage in activities you enjoy\n✓ Get some sunlight and fresh air\n✓ Practice self-compassion\n✓ Consider reaching out to a mental health professional\n\nYou're not alone in this. 💙",
+            
+            'motivation': "Here's some inspiration for you:\n\n💪 Remember why you started\n🎯 Break goals into smaller steps\n✨ Celebrate small wins\n🌱 Progress over perfection\n💙 Be kind to yourself\n\nYou have the strength within you! What's your goal?",
+            
+            'sleep': "Better sleep tips:\n\n🌙 Consistent sleep schedule (same time daily)\n📱 No screens 1 hour before bed\n🌡️ Cool bedroom temperature (60-67°F)\n📖 Try relaxing activities\n☕ Avoid caffeine after 2 PM\n🛏️ Try meditation or breathing exercises\n\nSleep well! 😴",
+            
+            'exercise': "Exercise benefits your mental health:\n\n🏃 Start with 30 minutes daily\n🧘 Mix cardio with strength training\n🚴 Choose activities you enjoy\n👥 Exercise with friends for motivation\n⏰ Morning exercise boosts mood all day\n🎵 Listen to music while exercising\n\nLet's get moving! 💪",
+            
+            'default': "I appreciate you sharing that with me. Could you tell me more? Remember:\n\n✓ Your feelings are valid\n✓ You're not alone\n✓ It's okay to seek help\n✓ Small steps lead to big changes\n\nI'm here to listen and support you. 💙"
+        };
+
+        function addMessage(text, isUser = false) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+            
+            if (isUser) {
+                messageDiv.innerHTML = `
+                    <div class="message-avatar">👤</div>
+                    <div class="message-bubble">${text}</div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-bubble">${text}</div>
+                `;
+            }
+            
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function getBotResponse(userMessage) {
+            const lowerMessage = userMessage.toLowerCase();
+            
+            for (const [keyword, response] of Object.entries(botResponses)) {
+                if (keyword !== 'default' && lowerMessage.includes(keyword)) {
+                    return response;
+                }
+            }
+            
+            return botResponses.default;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            addMessage(message, true);
+            input.value = '';
+            
+            // Simulate bot thinking
+            setTimeout(() => {
+                const response = getBotResponse(message);
+                addMessage(response, false);
+            }, 500);
+        }
+
+        function quickOption(option) {
+            addMessage(option, true);
+            setTimeout(() => {
+                const response = getBotResponse(option);
+                addMessage(response, false);
+            }, 500);
+        }
+
+        function clearChat() {
+            document.getElementById('chatMessages').innerHTML = `
+                <div class="message bot">
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-bubble">
+                        <p>👋 Hello again! How are you feeling today? I'm here to listen and support you.</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Allow Enter key to send message
+        document.getElementById('userInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>

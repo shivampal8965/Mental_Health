@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindCare - My Goals</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .goals-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .goal-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--text-primary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 0.5rem;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            outline: none;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 0.5rem;
+            font-size: 0.95rem;
+            font-family: inherit;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            outline: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--primary-color);
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .btn-danger {
+            background: var(--danger-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+
+        .btn-danger:hover {
+            opacity: 0.8;
+        }
+
+        .goals-list {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .no-goals {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .no-goals-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .goal-item {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
+        .goal-item.completed {
+            border-color: rgba(34, 197, 94, 0.3);
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.05), rgba(34, 197, 94, 0.05));
+        }
+
+        .goal-content {
+            flex: 1;
+        }
+
+        .goal-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .goal-checkbox {
+            width: 1.5rem;
+            height: 1.5rem;
+            cursor: pointer;
+            accent-color: var(--success-color);
+        }
+
+        .goal-category {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--primary-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-left: 0.5rem;
+        }
+
+        .goal-category.exercise {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger-color);
+        }
+
+        .goal-category.routine {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--info-color);
+        }
+
+        .goal-category.other {
+            background: rgba(168, 85, 247, 0.2);
+            color: var(--secondary-color);
+        }
+
+        .goal-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .goal-item.completed .goal-name {
+            text-decoration: line-through;
+            color: var(--text-secondary);
+        }
+
+        .goal-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        .goal-meta {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .goal-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--border-color);
+            border-radius: 3px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success-color), var(--info-color));
+            transition: width 0.3s ease;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .success-message {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--success-color);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger-color);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">🧠 MindCare</div>
+            <div class="navbar-menu">
+                <a href="index.html" class="navbar-link">Home</a>
+                <a href="dashboard.html" class="navbar-link">Dashboard</a>
+                <a href="mood_tracker.html" class="navbar-link">Mood Tracker</a>
+                <a href="goals.html" class="navbar-link active">Goals</a>
+                <a href="ratings.html" class="navbar-link">Ratings</a>
+                <a href="stats.html" class="navbar-link">Statistics</a>
+                <a href="chatbot.html" class="navbar-link">Chatbot</a>
+                <button class="btn-logout">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="goals-container">
+        <div class="page-header">
+            <h1 class="page-title">🎯 My Goals</h1>
+            <p class="page-subtitle">Set and track your health and wellness goals for a better life</p>
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="totalGoals">0</div>
+                <div class="stat-label">Total Goals</div>
+            </div>
+            <div class="stat-card" style="background: linear-gradient(135deg, var(--success-color), #10b981);">
+                <div class="stat-number" id="completedGoals">0</div>
+                <div class="stat-label">Completed</div>
+            </div>
+            <div class="stat-card" style="background: linear-gradient(135deg, var(--warning-color), #f97316);">
+                <div class="stat-number" id="activeGoals">0</div>
+                <div class="stat-label">Active</div>
+            </div>
+            <div class="stat-card" style="background: linear-gradient(135deg, var(--info-color), #0ea5e9);">
+                <div class="stat-number" id="completionRate">0%</div>
+                <div class="stat-label">Completion Rate</div>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <!-- Create New Goal -->
+            <div class="goal-card">
+                <h2 class="card-title">➕ Create New Goal</h2>
+
+                <div class="success-message" id="successMessage">✓ Goal created successfully!</div>
+                <div class="error-message" id="errorMessage"></div>
+
+                <form id="goalForm">
+                    <div class="form-group">
+                        <label class="form-label" for="goalName">Goal Name</label>
+                        <input 
+                            type="text" 
+                            id="goalName" 
+                            class="form-control" 
+                            placeholder="e.g., 30 minutes daily exercise"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="goalDescription">Description</label>
+                        <textarea 
+                            id="goalDescription" 
+                            class="form-control" 
+                            placeholder="Add details about your goal..."
+                        ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="goalCategory">Category</label>
+                        <select id="goalCategory" class="form-select" required>
+                            <option value="">Select a category</option>
+                            <option value="exercise">💪 Exercise</option>
+                            <option value="routine">📅 Daily Routine</option>
+                            <option value="nutrition">🥗 Nutrition</option>
+                            <option value="sleep">😴 Sleep</option>
+                            <option value="mindfulness">🧘 Mindfulness</option>
+                            <option value="other">🎯 Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="goalFrequency">Frequency</label>
+                        <select id="goalFrequency" class="form-select" required>
+                            <option value="">Select frequency</option>
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                            <option value="once">One-time</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="goalTarget">Target Value (Optional)</label>
+                        <input 
+                            type="text" 
+                            id="goalTarget" 
+                            class="form-control" 
+                            placeholder="e.g., 30 minutes, 5 days a week"
+                        >
+                    </div>
+
+                    <button type="submit" class="btn-primary" style="width: 100%;">Create Goal</button>
+                </form>
+            </div>
+
+            <!-- Goal Tips & Resources -->
+            <div class="goal-card">
+                <h2 class="card-title">💡 Goal Setting Tips</h2>
+
+                <div style="space-y: 1rem;">
+                    <div style="margin-bottom: 1rem; padding: 1rem; background: rgba(99, 102, 241, 0.05); border-radius: 0.5rem;">
+                        <h4 style="color: var(--primary-color); margin: 0 0 0.5rem 0;">Be Specific</h4>
+                        <p style="margin: 0; font-size: 0.9rem; color: var(--text-secondary);">Instead of "exercise more," try "30 minutes of walking daily"</p>
+                    </div>
+
+                    <div style="margin-bottom: 1rem; padding: 1rem; background: rgba(34, 197, 94, 0.05); border-radius: 0.5rem;">
+                        <h4 style="color: var(--success-color); margin: 0 0 0.5rem 0;">Make it Measurable</h4>
+                        <p style="margin: 0; font-size: 0.9rem; color: var(--text-secondary);">Track progress with numbers or frequency</p>
+                    </div>
+
+                    <div style="margin-bottom: 1rem; padding: 1rem; background: rgba(59, 130, 246, 0.05); border-radius: 0.5rem;">
+                        <h4 style="color: var(--info-color); margin: 0 0 0.5rem 0;">Keep it Achievable</h4>
+                        <p style="margin: 0; font-size: 0.9rem; color: var(--text-secondary);">Start small and build up gradually</p>
+                    </div>
+
+                    <div style="margin-bottom: 0; padding: 1rem; background: rgba(168, 85, 247, 0.05); border-radius: 0.5rem;">
+                        <h4 style="color: var(--secondary-color); margin: 0 0 0.5rem 0;">Review Regularly</h4>
+                        <p style="margin: 0; font-size: 0.9rem; color: var(--text-secondary);">Check your progress weekly and adjust as needed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Goals List -->
+        <div class="goals-list">
+            <h2 class="card-title">📋 Your Goals</h2>
+            <div id="goalsList" class="no-goals">
+                <div class="no-goals-icon">🎯</div>
+                <p>No goals yet. Create your first goal to get started!</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        const goalForm = document.getElementById('goalForm');
+        const goalsList = document.getElementById('goalsList');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Load goals on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadGoals();
+            setupLogoutButton();
+        });
+
+        // Form submission
+        goalForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const goalName = document.getElementById('goalName').value.trim();
+            const goalDescription = document.getElementById('goalDescription').value.trim();
+            const goalCategory = document.getElementById('goalCategory').value;
+            const goalFrequency = document.getElementById('goalFrequency').value;
+            const goalTarget = document.getElementById('goalTarget').value.trim();
+
+            if (!goalName) {
+                showError('Goal name is required');
+                return;
+            }
+
+            if (!goalCategory) {
+                showError('Please select a category');
+                return;
+            }
+
+            if (!goalFrequency) {
+                showError('Please select a frequency');
+                return;
+            }
+
+            // Store goal in localStorage (since no backend endpoint yet)
+            const goals = JSON.parse(localStorage.getItem('userGoals') || '[]');
+            
+            const newGoal = {
+                id: Date.now(),
+                name: goalName,
+                description: goalDescription,
+                category: goalCategory,
+                frequency: goalFrequency,
+                target: goalTarget,
+                completed: false,
+                createdAt: new Date().toISOString()
+            };
+
+            goals.push(newGoal);
+            localStorage.setItem('userGoals', JSON.stringify(goals));
+
+            showSuccess('Goal created successfully!');
+            goalForm.reset();
+            loadGoals();
+        });
+
+        async function loadGoals() {
+            const goals = JSON.parse(localStorage.getItem('userGoals') || '[]');
+
+            if (goals.length === 0) {
+                goalsList.innerHTML = `
+                    <div class="no-goals">
+                        <div class="no-goals-icon">🎯</div>
+                        <p>No goals yet. Create your first goal to get started!</p>
+                    </div>
+                `;
+            } else {
+                goalsList.innerHTML = goals.map(goal => `
+                    <div class="goal-item ${goal.completed ? 'completed' : ''}">
+                        <div class="goal-content">
+                            <div class="goal-header">
+                                <input 
+                                    type="checkbox" 
+                                    class="goal-checkbox" 
+                                    ${goal.completed ? 'checked' : ''}
+                                    onchange="toggleGoal(${goal.id})"
+                                >
+                                <div>
+                                    <span class="goal-name">${goal.name}</span>
+                                    <span class="goal-category ${goal.category}">${goal.category.toUpperCase()}</span>
+                                </div>
+                            </div>
+                            ${goal.description ? `<div class="goal-description">${goal.description}</div>` : ''}
+                            <div class="goal-meta">
+                                <span>📍 ${goal.frequency}</span>
+                                ${goal.target ? `<span>🎯 ${goal.target}</span>` : ''}
+                                <span>📅 ${new Date(goal.createdAt).toLocaleDateString()}</span>
+                            </div>
+                        </div>
+                        <div class="goal-actions">
+                            <button class="btn-danger" onclick="deleteGoal(${goal.id})">Delete</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            updateStats(goals);
+        }
+
+        function toggleGoal(id) {
+            const goals = JSON.parse(localStorage.getItem('userGoals') || '[]');
+            const goal = goals.find(g => g.id === id);
+            if (goal) {
+                goal.completed = !goal.completed;
+                localStorage.setItem('userGoals', JSON.stringify(goals));
+                loadGoals();
+            }
+        }
+
+        function deleteGoal(id) {
+            if (confirm('Are you sure you want to delete this goal?')) {
+                let goals = JSON.parse(localStorage.getItem('userGoals') || '[]');
+                goals = goals.filter(g => g.id !== id);
+                localStorage.setItem('userGoals', JSON.stringify(goals));
+                loadGoals();
+            }
+        }
+
+        function updateStats(goals) {
+            const total = goals.length;
+            const completed = goals.filter(g => g.completed).length;
+            const active = total - completed;
+            const rate = total === 0 ? 0 : Math.round((completed / total) * 100);
+
+            document.getElementById('totalGoals').textContent = total;
+            document.getElementById('completedGoals').textContent = completed;
+            document.getElementById('activeGoals').textContent = active;
+            document.getElementById('completionRate').textContent = rate + '%';
+        }
+
+        function showSuccess(message) {
+            successMessage.textContent = '✓ ' + message;
+            successMessage.classList.add('show');
+            setTimeout(() => {
+                successMessage.classList.remove('show');
+            }, 3000);
+        }
+
+        function showError(message) {
+            errorMessage.textContent = '❌ ' + message;
+            errorMessage.classList.add('show');
+            setTimeout(() => {
+                errorMessage.classList.remove('show');
+            }, 3000);
+        }
+
+        function setupLogoutButton() {
+            const logoutBtn = document.querySelector('.btn-logout');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    localStorage.removeItem('authToken');
+                    localStorage.removeItem('currentUser');
+                    window.location.href = 'login.html';
+                });
+            }
+        }
+    </script>
+</body>
+</html>

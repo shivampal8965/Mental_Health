@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindCare - Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="container flex-between">
+            <div class="navbar-brand">
+                <span>🧠</span>
+                <span>MindCare</span>
+            </div>
+            <ul style="display: flex; list-style: none; gap: 2rem; margin: 0;">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="dashboard.html" class="nav-link active">Dashboard</a></li>
+                <li><a href="mood_tracker.html" class="nav-link">Mood Tracker</a></li>
+                <li><a href="goals.html" class="nav-link">My Goals</a></li>
+                <li><a href="ratings.html" class="nav-link">Ratings</a></li>
+                <li><a href="stats.html" class="nav-link">Statistics</a></li>
+                <li><a href="chatbot.html" class="nav-link">AI Chatbot</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="container" style="padding: 2rem 0;">
+        <div style="margin-bottom: 3rem;">
+            <h1 style="font-size: 2.5rem; color: var(--text-primary); margin-bottom: 0.5rem;">Welcome Back! 👋</h1>
+            <p style="color: var(--text-secondary); font-size: 1rem;">Here's your mental health overview for today</p>
+        </div>
+
+        <!-- STATS SECTION -->
+        <div class="dashboard-container" style="margin-bottom: 3rem;">
+            <div class="stat-card">
+                <div style="font-size: 2rem;">😊</div>
+                <div class="stat-value">7.2/10</div>
+                <div class="stat-label">Current Mood</div>
+            </div>
+
+            <div class="stat-card success">
+                <div style="font-size: 2rem;">📈</div>
+                <div class="stat-value">↑ 12%</div>
+                <div class="stat-label">Weekly Improvement</div>
+            </div>
+
+            <div class="stat-card warning">
+                <div style="font-size: 2rem;">😰</div>
+                <div class="stat-value">42%</div>
+                <div class="stat-label">Stress Level</div>
+            </div>
+
+            <div class="stat-card success">
+                <div style="font-size: 2rem;">💤</div>
+                <div class="stat-value">7.5h</div>
+                <div class="stat-label">Last Night's Sleep</div>
+            </div>
+        </div>
+
+        <!-- CHARTS SECTION -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+            <!-- Weekly Mood Trend -->
+            <div class="card">
+                <div class="card-header">
+                    📊 Weekly Mood Trend
+                </div>
+                <div class="card-body">
+                    <canvas id="moodChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Mood Distribution -->
+            <div class="card">
+                <div class="card-header">
+                    🎯 Mood Distribution
+                </div>
+                <div class="card-body">
+                    <canvas id="distributionChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Stress Levels -->
+            <div class="card">
+                <div class="card-header">
+                    📈 Stress Levels
+                </div>
+                <div class="card-body">
+                    <canvas id="stressChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- QUICK ACTIONS -->
+        <div class="card" style="margin-bottom: 2rem;">
+            <div class="card-header">
+                ⚡ Quick Actions
+            </div>
+            <div class="card-body">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
+                    <a href="mood_tracker.html" class="btn btn-primary" style="width: 100%; text-align: center;">
+                        Log Current Mood
+                    </a>
+                    <a href="chatbot.html" class="btn btn-primary" style="width: 100%; text-align: center;">
+                        Chat with AI
+                    </a>
+                    <button class="btn btn-primary" style="width: 100%;">
+                        📝 View Notes
+                    </button>
+                    <button class="btn btn-primary" style="width: 100%;">
+                        🎯 Set Goals
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- RECENT ACTIVITIES -->
+        <div class="card">
+            <div class="card-header">
+                🕐 Recent Activities
+            </div>
+            <div class="card-body">
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div style="border-left: 4px solid var(--primary-color); padding-left: 1rem;">
+                        <p style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem;">Logged Mood - Happy 😊</p>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">Today at 9:30 AM</p>
+                    </div>
+                    <div style="border-left: 4px solid var(--success-color); padding-left: 1rem;">
+                        <p style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem;">Stress Level - Low</p>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">Today at 8:00 AM</p>
+                    </div>
+                    <div style="border-left: 4px solid var(--info-color); padding-left: 1rem;">
+                        <p style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem;">AI Chat Session</p>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">Yesterday at 6:45 PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h5>About MindCare</h5>
+                    <p style="color: rgba(255,255,255,0.7);">Dedicated to mental health support.</p>
+                </div>
+                <div class="footer-section">
+                    <h5>Features</h5>
+                    <ul>
+                        <li><a href="#">Mood Tracking</a></li>
+                        <li><a href="#">AI Chatbot</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h5>Support</h5>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 MindCare. All rights reserved. 💙</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mood Chart
+        const moodCtx = document.getElementById('moodChart').getContext('2d');
+        const moodChart = new Chart(moodCtx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Mood Score',
+                    data: [6.5, 7.0, 6.8, 7.5, 7.2, 7.8, 7.2],
+                    borderColor: 'var(--primary-color)',
+                    backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: 'var(--primary-color)',
+                    pointBorderColor: 'white',
+                    pointBorderWidth: 2,
+                    pointRadius: 5,
+                    pointHoverRadius: 7
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 10,
+                        grid: {
+                            color: 'rgba(0,0,0,0.05)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Distribution Chart
+        const distCtx = document.getElementById('distributionChart').getContext('2d');
+        const distributionChart = new Chart(distCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Happy', 'Calm', 'Neutral', 'Sad', 'Anxious'],
+                datasets: [{
+                    data: [35, 25, 20, 12, 8],
+                    backgroundColor: [
+                        'var(--primary-color)',
+                        'var(--success-color)',
+                        '#94a3b8',
+                        'var(--warning-color)',
+                        'var(--danger-color)'
+                    ],
+                    borderColor: 'white',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // Stress Chart
+        const stressCtx = document.getElementById('stressChart').getContext('2d');
+        const stressChart = new Chart(stressCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Stress Level',
+                    data: [45, 52, 48, 40, 35, 30, 42],
+                    backgroundColor: 'var(--warning-color)',
+                    borderRadius: 5,
+                    borderSkipped: false
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: {
+                            color: 'rgba(0,0,0,0.05)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
