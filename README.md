@@ -474,8 +474,8 @@ If you or someone you know is struggling:
 ### Technical Support
 
 - 📧 Email: support@mindcare.ai
-- 📝 Issues: https://github.com/yourusername/mental-health-system/issues
-- 💬 Discussions: https://github.com/yourusername/mental-health-system/discussions
+- 📝 Issues: https://github.com/shivampal8965/mental-health-system/issues
+- 💬 Discussions: https://github.com/shivampal8965/mental-health-system/discussions
 
 ---
 
@@ -513,6 +513,6 @@ Always seek professional help when needed. Your mental health matters. 💙
 
 ---
 
-**Made with ❤️ for mental health awareness and support**
+**Made by <b>Shivam Pal</b> ❤️ for <u>mental health awareness and support</u>**
 
 Last Updated: March 2026
