@@ -1,12 +1,12 @@
 from flask import Blueprint, request, jsonify
 from datetime import datetime, timedelta
+from models import db, MoodEntry, User
 
 mood_bp = Blueprint('moods', __name__)
 
 @mood_bp.route('/log', methods=['POST'])
 def log_mood():
     """Log a new mood entry"""
-    from app import db, MoodEntry, User
     data = request.get_json()
     user_id = data.get('user_id')
     

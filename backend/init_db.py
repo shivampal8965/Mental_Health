@@ -4,9 +4,11 @@ Initialize database with sample data
 """
 
 import sys
-sys.path.insert(0, '.')
+import os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from app import app, db, User, MoodEntry, ChatMessage
+from app import app
+from models import db, User, MoodEntry, ChatMessage
 from werkzeug.security import generate_password_hash
 from datetime import datetime, timedelta
 

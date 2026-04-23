@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from datetime import datetime
-from werkzeug.security import generate_password_hash
+from models import db, Rating, User
 
 # Create blueprint
 ratings_bp = Blueprint('ratings', __name__)
@@ -10,8 +10,6 @@ ratings_bp = Blueprint('ratings', __name__)
 def submit_rating():
     """Submit a new rating/feedback"""
     try:
-        from app import db, Rating
-        
         data = request.get_json()
         
         rating = Rating(
@@ -46,8 +44,6 @@ def submit_rating():
 def get_all_ratings():
     """Get all ratings with optional filtering"""
     try:
-        from app import Rating
-        
         # Get query parameters for filtering
         limit = request.args.get('limit', default=50, type=int)
         sort_by = request.args.get('sort_by', default='created_at')
@@ -73,7 +69,6 @@ def get_all_ratings():
 def get_rating_stats():
     """Get rating statistics"""
     try:
-        from app import Rating, db
         from sqlalchemy import func
         
         total_ratings = Rating.query.count()
@@ -122,8 +117,6 @@ def get_rating_stats():
 def get_user_ratings(user_id):
     """Get all ratings submitted by a specific user"""
     try:
-        from app import Rating
-        
         ratings = Rating.query.filter_by(user_id=user_id).all()
         
         return jsonify({
@@ -143,8 +136,6 @@ def get_user_ratings(user_id):
 def get_rating(rating_id):
     """Get a specific rating"""
     try:
-        from app import Rating
-        
         rating = Rating.query.get(rating_id)
         
         if not rating:
@@ -169,8 +160,6 @@ def get_rating(rating_id):
 def delete_rating(rating_id):
     """Delete a rating"""
     try:
-        from app import db, Rating
-        
         rating = Rating.query.get(rating_id)
         
         if not rating:

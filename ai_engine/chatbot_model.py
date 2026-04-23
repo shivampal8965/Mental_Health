@@ -5,7 +5,10 @@ Advanced chatbot with NLP capabilities and mental health context
 
 from typing import Dict, List, Tuple
 import re
-from emotion_detection import emotion_detector, is_in_crisis
+try:
+    from .emotion_detection import emotion_detector, is_in_crisis
+except ImportError:
+    from emotion_detection import emotion_detector, is_in_crisis
 
 class ChatbotModel:
     """Advanced chatbot for mental health support"""

@@ -2,13 +2,13 @@ from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
 from datetime import datetime, timedelta
+from models import db, User
 
 user_bp = Blueprint('users', __name__)
 
 @user_bp.route('/register', methods=['POST'])
 def register():
     """Register a new user"""
-    from app import db, User
     data = request.get_json()
     
     if not data or not data.get('username') or not data.get('email') or not data.get('password'):
