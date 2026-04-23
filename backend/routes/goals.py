@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from datetime import datetime
+from models import db, Goal, User
 
 # Create blueprint
 goals_bp = Blueprint('goals', __name__)
@@ -9,8 +10,6 @@ goals_bp = Blueprint('goals', __name__)
 def create_goal():
     """Create a new goal"""
     try:
-        from app import db, Goal
-        
         data = request.get_json()
         
         goal = Goal(
@@ -42,8 +41,6 @@ def create_goal():
 def get_user_goals(user_id):
     """Get all goals for a specific user"""
     try:
-        from app import Goal
-        
         # Get optional filter
         status = request.args.get('status')
         category = request.args.get('category')
@@ -74,8 +71,6 @@ def get_user_goals(user_id):
 def get_goal(goal_id):
     """Get a specific goal"""
     try:
-        from app import Goal
-        
         goal = Goal.query.get(goal_id)
         
         if not goal:
@@ -100,8 +95,6 @@ def get_goal(goal_id):
 def update_goal(goal_id):
     """Update a goal"""
     try:
-        from app import db, Goal
-        
         goal = Goal.query.get(goal_id)
         
         if not goal:
@@ -149,8 +142,6 @@ def update_goal(goal_id):
 def update_goal_progress(goal_id):
     """Update only the progress of a goal"""
     try:
-        from app import db, Goal
-        
         goal = Goal.query.get(goal_id)
         
         if not goal:
@@ -187,8 +178,6 @@ def update_goal_progress(goal_id):
 def delete_goal(goal_id):
     """Delete a goal"""
     try:
-        from app import db, Goal
-        
         goal = Goal.query.get(goal_id)
         
         if not goal:
@@ -216,7 +205,7 @@ def delete_goal(goal_id):
 def get_user_goal_stats(user_id):
     """Get goal statistics for a user"""
     try:
-        from app import Goal, db
+        from sqlalchemy import func
         
         all_goals = Goal.query.filter_by(user_id=user_id).all()
         
@@ -229,10 +218,10 @@ def get_user_goal_stats(user_id):
         completion_rate = (completed / total * 100) if total > 0 else 0
         
         # Get average progress
-        avg_progress = db.session.query(db.func.avg(Goal.progress)).filter_by(user_id=user_id).scalar() or 0
+        avg_progress = db.session.query(func.avg(Goal.progress)).filter_by(user_id=user_id).scalar() or 0
         
         # Goals by category
-        categories = db.session.query(Goal.category, db.func.count(Goal.id)).filter_by(user_id=user_id).group_by(Goal.category).all()
+        categories = db.session.query(Goal.category, func.count(Goal.id)).filter_by(user_id=user_id).group_by(Goal.category).all()
         category_counts = {cat: count for cat, count in categories}
         
         return jsonify({
